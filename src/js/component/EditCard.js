@@ -2,21 +2,25 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const AddContact = () => {
-	const { actions } = useContext(Context);
+export const EditCard = props => {
+	const { actions, store } = useContext(Context);
+	useEffect(() => {
+		actions.editContact(props);
+	}, []);
 
 	return (
 		<div className="container">
 			<div>
-				<h1 className="text-center mt-5">Add a new contact</h1>
-				<form onSubmit={e => actions.submitData(e)}>
+				<h1 className="text-center mt-5">Edit a contact</h1>
+				<form id={store.contact.id} onSubmit={e => actions.submitEditData(e)}>
 					<div className="form-group">
-						<label>Full Name</label>
+						<label>Full name</label>
 						<input
 							type="text"
 							className="form-control"
-							placeholder="Full Name"
+							placeholder={store.contact.full_name}
 							name="full_name"
+							value={store.contact.full_name}
 							onChange={e => actions.createContac(e)}
 						/>
 					</div>
@@ -25,7 +29,8 @@ export const AddContact = () => {
 						<input
 							type="email"
 							className="form-control"
-							placeholder="Enter email"
+							placeholder={store.contact.email}
+							value={store.contact.email}
 							name="email"
 							onChange={e => actions.createContac(e)}
 						/>
@@ -35,7 +40,8 @@ export const AddContact = () => {
 						<input
 							type="phone"
 							className="form-control"
-							placeholder="Enter phone"
+							placeholder={store.contact.phone}
+							value={store.contact.phone}
 							name="phone"
 							onChange={e => actions.createContac(e)}
 						/>
@@ -45,7 +51,8 @@ export const AddContact = () => {
 						<input
 							type="text"
 							className="form-control"
-							placeholder="Enter address"
+							value={store.contact.address}
+							placeholder={store.contact.address}
 							name="address"
 							onChange={e => actions.createContac(e)}
 						/>
